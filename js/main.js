@@ -1,125 +1,114 @@
 "use strict";
-
 //Задание 1
-let a = 1,
-    b = 1,
-    c, d;
-//Префиксный инкремент увеличит значение переменной а на 1 и возвратит новое значение (a=2)
-c = ++a;
-alert(c);
-//Постфиксный инкремент увеличивает значение переменной b (было b=1) на 1 (станет b=2), но возвращает старое значение (b=1)
-d = b++;
-alert(d);
+for (let i = 0; i <= 10; i++) {
+    if (i == 0) {
+        console.log(`${i} - это ноль`);
+    } else if (i % 2 == 0) {
+        console.log(`${i} - четное число`);
+    } else {
+        console.log(`${i} - нечетное число`);
 
-// Префиксный инкремент увеличивает значение переменной a (было a=2) ещё на 1 (станет а=3), а затем складывается с 2 (2+3=5)
-c = 2 + ++a;
-alert(c);
-//Постфиксный инкремент увеличит переменную b на 1 (b=3), но вернет старое значение (b=2), поэтому 2 + 2 = 4
-d = 2 + b++;
-alert(d);
-
-alert(a);
-alert(b);
-
-//Задание 2
-a = 2;
-//Оператор (*=) умножает переменную на значение правого операнда (получаем a=4), а затем складываем результат с 1 (1+4=5)
-let x = 1 + (a *= 2);
-
-//Задание 3 
-a = 6,
-    b = 0;
-if (a >= 0 && b >= 0) {
-    console.log(a - b);
-} else if (a < 0 && b < 0) {
-    console.log(a * b);
-} else {
-    console.log(a + b);
+    }
 }
+// Задание 2
+const post = {
+    author: "John",
+    postId: 23,
+    comments: [{
+            userId: 10,
+            userName: "Alex",
+            text: "lorem ipsum",
+            rating: {
+                likes: 10,
+                dislikes: 2
+            }
+        },
+        {
+            userId: 5,
+            userName: "Jane",
+            text: "lorem ipsum 2",
+            rating: {
+                likes: 3,
+                dislikes: 1
+            }
+        },
+
+    ]
+};
+
+console.log(post.author);
+console.log(post["comments"][0]["rating"]["dislikes"]);
+console.log(post["comments"][1]["userId"]);
+console.log(post["comments"][1]["text"]);
+
+//Задание 3
+const products = [{
+        id: 3,
+        price: 200,
+    },
+    {
+        id: 4,
+        price: 900,
+    },
+    {
+        id: 1,
+        price: 1000,
+    },
+];
+
+products.forEach(element => {
+    element.price = element.price - element.price * 0.15;
+});
+
+console.log(products);
 
 //Задание 4
 
-function sum(x, y) {
-    let result = x + y;
-    return result;
-}
+const productsList = [{
+        id: 3,
+        price: 127,
+        photos: [
+            "1.jpg",
+            "2.jpg",
+        ]
+    },
+    {
+        id: 5,
+        price: 499,
+        photos: []
+    },
+    {
+        id: 10,
+        price: 26,
+        photos: [
+            "3.jpg"
+        ]
+    },
+    {
+        id: 8,
+        price: 78,
+    },
+];
 
-function minus(x, y) {
-    let result = x - y;
-    return result;
-}
-
-function multi(x, y) {
-    let result = x * y;
-    return result;
-}
-
-function division(x, y) {
-    let result = x / y;
-    return result;
-}
-
-sum(10, -15);
-minus(10, -15);
-multi(10, -15);
-division(15, 10);
-
-//Задание 5
-
-function mathOperation(arg1, arg2, operation) {
-    let result;
-    switch (operation) {
-        case "sum":
-            result = sum(arg1, arg2);
-            break;
-        case "minus":
-            result = minus(arg1, arg2);
-            break;
-        case "multi":
-            result = multi(arg1, arg2);
-            break;
-        case "division":
-            result = division(arg1, arg2);
-            break;
-        default:
-            console.log("Неизвестная операция");
+const productsWithPhotos = productsList.filter(function(product) {
+    if (product.hasOwnProperty("photos") && product.photos.length > 0) {
+        return true;
     }
-    return result;
-}
+});
 
-mathOperation(10, 2, "sum");
-mathOperation(-20, -50, "minus");
-mathOperation(13, 2, "multi");
-mathOperation(10, 2, "division");
+productsList.sort(function(product1, product2) {
+    if (product1.price < product2.price) {
+        return -1;
+    }
+});
+console.log(productsWithPhotos);
+console.log(productsList);
 
-//Задание 6
-let number = +prompt("Введите число: ", '');
-let str = String(number);
-let lastSymbol = str[str.length - 1];
 
-switch (lastSymbol) {
-    case "1":
-        if (str.length == 2 && str[0] == "1") {
-            console.log(`Ваша сумма в ${number} рублей успешно зачислена.`);
-        } else {
-            console.log(`Ваша сумма в ${number} рубль успешно зачислена.`);
-        }
-        break;
-    case "2":
-    case "3":
-    case "4":
-        if (str.length >= 2 && str[str.length - 2] == "1") {
-            console.log(`Ваша сумма в ${number} рублей успешно зачислена.`);
-        } else {
-            console.log(`Ваша сумма в ${number} рубля успешно зачислена.`);
-        }
-        break;
-    case "5":
-    case "6":
-    case "7":
-    case "8":
-    case "9":
-    case "0":
-        console.log(`Ваша сумма в ${number} рублей успешно зачислена.`);
-        break;
+//Задание 6 
+let letter = "x";
+let result = "";
+for (let i = 1; i <= 20; i++) {
+    result += letter;
+    console.log(result);
 }
