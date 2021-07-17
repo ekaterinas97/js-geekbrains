@@ -1,114 +1,85 @@
 "use strict";
-//Задание 1
-for (let i = 0; i <= 10; i++) {
-    if (i == 0) {
-        console.log(`${i} - это ноль`);
-    } else if (i % 2 == 0) {
-        console.log(`${i} - четное число`);
-    } else {
-        console.log(`${i} - нечетное число`);
-
-    }
+// Задание 1.1
+// es5
+function Product(name, price) {
+    this.name = name;
+    this.price = price;
 }
-// Задание 2
-const post = {
-    author: "John",
-    postId: 23,
-    comments: [{
-            userId: 10,
-            userName: "Alex",
-            text: "lorem ipsum",
-            rating: {
-                likes: 10,
-                dislikes: 2
-            }
-        },
-        {
-            userId: 5,
-            userName: "Jane",
-            text: "lorem ipsum 2",
-            rating: {
-                likes: 3,
-                dislikes: 1
-            }
-        },
 
-    ]
+Product.prototype.make25PercentDiscount = function() {
+    this.price = this.price - this.price * 0.25;
 };
 
-console.log(post.author);
-console.log(post["comments"][0]["rating"]["dislikes"]);
-console.log(post["comments"][1]["userId"]);
-console.log(post["comments"][1]["text"]);
+let product1 = new Product("product1", 100);
+let product2 = new Product('product2', 500);
+product1.make25PercentDiscount();
+product2.make25PercentDiscount();
 
-//Задание 3
-const products = [{
-        id: 3,
-        price: 200,
-    },
-    {
-        id: 4,
-        price: 900,
-    },
-    {
-        id: 1,
-        price: 1000,
-    },
-];
-
-products.forEach(element => {
-    element.price = element.price - element.price * 0.15;
-});
-
-console.log(products);
-
-//Задание 4
-
-const productsList = [{
-        id: 3,
-        price: 127,
-        photos: [
-            "1.jpg",
-            "2.jpg",
-        ]
-    },
-    {
-        id: 5,
-        price: 499,
-        photos: []
-    },
-    {
-        id: 10,
-        price: 26,
-        photos: [
-            "3.jpg"
-        ]
-    },
-    {
-        id: 8,
-        price: 78,
-    },
-];
-
-const productsWithPhotos = productsList.filter(function(product) {
-    if (product.hasOwnProperty("photos") && product.photos.length > 0) {
-        return true;
+// es6
+class Product {
+    constructor(name, price) {
+        this.name = name;
+        this.price = price;
     }
-});
 
-productsList.sort(function(product1, product2) {
-    if (product1.price < product2.price) {
-        return -1;
+    make25PercentDiscount() {
+        this.price = this.price - this.price * 0.25;
     }
-});
-console.log(productsWithPhotos);
-console.log(productsList);
-
-
-//Задание 6 
-let letter = "x";
-let result = "";
-for (let i = 1; i <= 20; i++) {
-    result += letter;
-    console.log(result);
 }
+let product1 = new Product("product1", 100);
+let product2 = new Product('product2', 500);
+product1.make25PercentDiscount();
+product2.make25PercentDiscount();
+
+// Задание 1.2
+// es5
+function Post(author, text, date) {
+    this.author = author;
+    this.text = text;
+    this.date = date;
+}
+
+Post.prototype.edit = function(text) {
+    this.text = text;
+};
+
+function AttachedPost(author, text, date, highlighted) {
+    Post.call(this, author, text, date);
+    this.highlighted = highlighted;
+
+}
+AttachedPost.prototype = Object.create(Post.prototype);
+AttachedPost.prototype.constructor = AttachedPost;
+
+AttachedPost.prototype.makeTextHighlighted = function() {
+    this.highlighted = true;
+}
+
+let post2 = new AttachedPost('john', 'lorem ipsum', '17.07.2021', false);
+post2.makeTextHighlighted();
+post2.edit('changed text');
+
+// es6
+class Post {
+    constructor(author, text, date) {
+        this.author = author;
+        this.text = text;
+        this.date = date;
+    }
+    edit(text) {
+        this.text = text;
+    }
+}
+
+class AttachedPost extends Post {
+    constructor(author, text, date, highlighted) {
+        super(author, text, date);
+        this.highlighted = highlighted;
+    }
+    makeTextHighlighted() {
+        this.highlighted = true;
+    }
+}
+let post2 = new AttachedPost('john', 'lorem ipsum', '17.07.2021', false);
+post2.makeTextHighlighted();
+post2.edit('changed text');
